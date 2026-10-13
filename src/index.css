@@ -1,0 +1,364 @@
+@import 'tailwindcss';
+
+/* Nirmaan Tech. Dark only: the brand lives on warm black with one orange.
+   Base system borrowed from E-Cell IIT Bhilai (near-black ground, one accent,
+   huge uppercase display, hairline + inset-highlight depth), pushed to sci-fi. */
+@theme {
+  --color-paper: #0a0908;
+  --color-bone: #13110f;
+  --color-stone: #2b2621;
+  --color-ink: #f4eee6;
+  --color-ink-70: #b4aa9e;
+  --color-ink-40: #8e847a;
+  --color-accent: #ff6b00;
+
+  --font-display: 'Unbounded', sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'Share Tech Mono', ui-monospace, monospace;
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-paper);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  letter-spacing: -0.011em;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Grain over everything: makes flat dark planes read as material */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.hud-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-40);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ink-70);
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  margin-right: 0.8rem;
+  vertical-align: 0.3em;
+  background: var(--color-accent);
+}
+
+/* The panel, from E-Cell: hairline + inset top highlight + deep soft shadow */
+.panel {
+  background: color-mix(in oklab, var(--color-bone) 97%, transparent);
+  border: 1px solid var(--color-stone);
+  border-radius: 18px;
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+    0 30px 80px -30px rgb(0 0 0 / 0.95);
+}
+
+/* HUD corner brackets: top-left and bottom-right */
+.brackets {
+  position: relative;
+}
+.brackets::before,
+.brackets::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  transition: transform 400ms var(--ease-smooth);
+}
+.brackets::before {
+  top: -7px;
+  left: -7px;
+  border-top: 2px solid var(--color-accent);
+  border-left: 2px solid var(--color-accent);
+}
+.brackets::after {
+  right: -7px;
+  bottom: -7px;
+  border-right: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+}
+@media (hover: hover) {
+  .brackets:hover::before {
+    transform: translate(-5px, -5px);
+  }
+  .brackets:hover::after {
+    transform: translate(5px, 5px);
+  }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 52px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 300ms var(--ease-smooth), border-color 300ms var(--ease-smooth);
+}
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+.btn-ghost {
+  border: 1px solid var(--color-stone);
+  color: var(--color-ink);
+  background: rgb(10 9 8 / 0.55);
+}
+/* Fill wipes up from below on hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 450ms var(--ease-smooth);
+}
+.btn-primary::before {
+  background: var(--color-ink);
+}
+.btn-ghost::before {
+  background: var(--color-accent);
+}
+@media (hover: hover) {
+  .btn:hover::before {
+    transform: translateY(0);
+  }
+  .btn-ghost:hover {
+    color: var(--color-paper);
+    border-color: var(--color-accent);
+  }
+}
+.btn svg {
+  transition: transform 400ms var(--ease-smooth);
+}
+@media (hover: hover) {
+  .btn:hover svg {
+    transform: translate(3px, -3px) rotate(0deg);
+  }
+}
+
+/* Project screenshot: light spot follows the cursor, scan line sweeps on hover */
+.shot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--color-stone);
+  background: #fff;
+}
+.shot img {
+  transition: transform 900ms var(--ease-smooth);
+}
+.shot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgb(255 107 0 / 0.0) 45%, rgb(255 107 0 / 0.28) 50%, transparent 55%);
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .tilt:hover .shot img {
+    transform: scale(1.05);
+  }
+  .tilt:hover .shot::after {
+    animation: scan 1.4s var(--ease-smooth) 1;
+  }
+}
+@keyframes scan {
+  to {
+    transform: translateY(100%);
+  }
+}
+.tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.tilt .spot {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-smooth);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 107 0 / 0.1), transparent 60%);
+}
+@media (hover: hover) {
+  .tilt:hover .spot {
+    opacity: 1;
+  }
+}
+
+/* Integrations orbit. Rings spin; each chip counter-spins and un-tilts so
+   its label always faces the viewer. */
+.orbit-stage {
+  perspective: 1400px;
+}
+.orbit-plane {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt, 64deg));
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 999px;
+  border: 1px dashed rgb(255 107 0 / 0.35);
+  transform-style: preserve-3d;
+  animation: spin var(--dur) linear infinite;
+}
+.ring.rev {
+  animation-direction: reverse;
+}
+.chip-slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: rotate(var(--a)) translateX(var(--r));
+}
+.chip {
+  transform-style: preserve-3d;
+  animation: unspin var(--dur) linear infinite;
+}
+.ring.rev .chip {
+  animation-direction: reverse;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes unspin {
+  from {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--a))) rotateX(calc(-1 * var(--tilt, 64deg)));
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--a) - 360deg)) rotateX(calc(-1 * var(--tilt, 64deg)));
+  }
+}
+@media (hover: hover) {
+  .orbit-stage:hover .ring,
+  .orbit-stage:hover .chip {
+    animation-play-state: paused;
+  }
+}
+
+/* Contact rows: orange wipes in from the left */
+.wipe {
+  position: relative;
+  isolation: isolate;
+  transition: color 450ms var(--ease-smooth);
+}
+.wipe::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-accent);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 550ms var(--ease-smooth);
+}
+@media (hover: hover) {
+  .wipe:hover {
+    color: var(--color-paper);
+  }
+  .wipe:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .wipe:hover .hud-label {
+    color: var(--color-paper);
+  }
+}
+
+/* Process timeline step lights up as it crosses the middle of the screen */
+.step .node {
+  transition: background 400ms var(--ease-smooth), color 400ms var(--ease-smooth), border-color 400ms var(--ease-smooth), transform 500ms var(--ease-smooth);
+}
+.step.is-on .node {
+  background: var(--color-accent);
+  color: var(--color-paper);
+  border-color: var(--color-accent);
+  transform: scale(1.08);
+}
+.step.is-on h3 {
+  color: var(--color-ink);
+}
+
+/* Services prism faces */
+.prism {
+  transform-style: preserve-3d;
+}
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transition: border-color 400ms var(--ease-smooth);
+}
+.face.is-front {
+  border-color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
