@@ -4,7 +4,7 @@ import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { ArrowUpRight, GithubLogo, List, X } from '@phosphor-icons/react'
 import { scrollToId, reduced, lockScroll } from '../lib/scroll'
 import { useMagnetic } from '../hooks/useInteractions'
-import { GITHUB } from '../data'
+import { GITHUB, WHATSAPP } from '../data'
 
 gsap.registerPlugin(ScrambleTextPlugin)
 
@@ -165,8 +165,9 @@ export default function Nav() {
           </a>
           <a
             ref={cta}
-            href="#contact"
-            onClick={(e) => scrollToId(e, 'contact')}
+            href={WHATSAPP}
+            target="_blank"
+            rel="noreferrer"
             className="btn btn-primary ml-auto !min-h-12 !px-5 !text-xs md:ml-2"
           >
             Start a project <ArrowUpRight size={16} weight="bold" />

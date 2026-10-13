@@ -4,6 +4,7 @@ import { SplitText } from 'gsap/SplitText'
 import { ArrowUpRight, ArrowDown } from '@phosphor-icons/react'
 import { scrollToId, reduced, bootDone } from '../lib/scroll'
 import { useMagnetic } from '../hooks/useInteractions'
+import { WHATSAPP } from '../data'
 
 gsap.registerPlugin(SplitText)
 
@@ -76,7 +77,7 @@ export default function Hero() {
             <a ref={work} href="#work" onClick={(e) => scrollToId(e, 'work')} className="btn btn-primary">
               See the work <ArrowDown size={18} weight="bold" />
             </a>
-            <a ref={talk} href="#contact" onClick={(e) => scrollToId(e, 'contact')} className="btn btn-ghost">
+            <a ref={talk} href={WHATSAPP} target="_blank" rel="noreferrer" className="btn btn-ghost">
               Start a project <ArrowUpRight size={18} weight="bold" />
             </a>
           </div>

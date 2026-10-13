@@ -27,6 +27,11 @@ import {
 
 export const GITHUB = 'https://github.com/kansalakshat'
 
+/* Every "Start a project" button opens a WhatsApp chat with this message ready */
+export const WHATSAPP = `https://wa.me/918964909090?text=${encodeURIComponent(
+  "Hi Nirmaan Tech, I'd like to start a project. Can we talk?",
+)}`
+
 export const contact = {
   email: 'nirmaanos35@gmail.com',
   phones: [

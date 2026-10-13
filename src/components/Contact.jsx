@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react'
-import { contact, GITHUB } from '../data'
+import { contact, GITHUB, WHATSAPP } from '../data'
 import { reduced, scrollToId } from '../lib/scroll'
 import { useMagnetic } from '../hooks/useInteractions'
 
@@ -133,7 +133,9 @@ export default function Contact() {
           </p>
           <a
             ref={cta}
-            href={`mailto:${contact.email}?subject=${encodeURIComponent('New project for Nirmaan Tech')}`}
+            href={WHATSAPP}
+            target="_blank"
+            rel="noreferrer"
             className="btn btn-primary self-start md:self-auto"
           >
             Start a project <ArrowUpRight size={18} weight="bold" />
